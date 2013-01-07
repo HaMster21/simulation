@@ -4,6 +4,8 @@ namespace Simulation
 {
 	public class SimulationController
 	{
+		public delegate void StateUpdateHandler();
+		
 		#region Fields
 		bool isRunning;
 		int updateInterval { get; set; }
@@ -39,6 +41,9 @@ namespace Simulation
 			Console.WriteLine ("Update in progress...");
 			if (RoundCount > 0) {
 				RoundCount--;
+
+				// calling all methods that update the state of the simulation
+				StateUpdateHandler();
 			}
 			else RequestshutDown();
 		}
