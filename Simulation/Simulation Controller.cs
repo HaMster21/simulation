@@ -43,7 +43,7 @@ namespace Simulation
 				RoundCount--;
 
 				// calling all methods that update the state of the simulation
-				StateUpdateHandler();
+				//StateUpdateHandler();
 			}
 			else RequestshutDown();
 		}

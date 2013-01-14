@@ -14,11 +14,6 @@ namespace Simulation
         [STAThread]
         static void Main()
         {
-            // - [ ] a task list item
-            //- [ ] list syntax required
-            //- [ ] normal **formatting**, @mentions, #1234 refs
-            //- [ ] incomplete
-            // - [x] completed
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new SettingsForm());
