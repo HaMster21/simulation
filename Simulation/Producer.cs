@@ -13,7 +13,10 @@ namespace Simulation
 
         public Ressource ProducedRessource { get; private set; }
         public int Interval { get; private set; }
+
+        // will indicate how easily the ressource can be produced in this facility
         public int Weight { get; private set; }
+
         public int Store { get; private set; }
         public int maxStore { get; private set; }
         public PointF Position { get; private set; }
