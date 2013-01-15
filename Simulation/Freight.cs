@@ -7,14 +7,14 @@ namespace Simulation
 {
     struct Freight
     {
-        private List<FreightPackage> inventory;
+        private Dictionary<int, string> inventory;
 
         public void addToFreight(FreightPackage package)
         {
             //TODO: Rewrite to store items only once
             //TODO: Maybe it is more comfortable to use a hashmap here with itemID as hash and the 
             //amount contained
-            inventory.Add(package);
+            //inventory.Add(package);
         }
 
         //TODO: Store item IDs in FreightPackages only once and add amounts to a FreightPackage 

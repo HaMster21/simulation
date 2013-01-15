@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Freight.cs" />
+    <Compile Include="FreightPackage.cs" />
     <Compile Include="Froms\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +65,7 @@
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Ressoruce.cs" />
+    <Compile Include="RessourceManager.cs" />
     <Compile Include="Simulation Controller.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
