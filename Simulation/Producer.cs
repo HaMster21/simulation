@@ -14,13 +14,15 @@ namespace Simulation
         public int Interval { get; private set; }
         public int Weight { get; private set; }
         public int Store { get; private set; }
+        public int maxStore { get; private set; }
 
-        Producer(Ressource product, int interval, int weight)
+        Producer(Ressource product, int interval, int weight, int storeLimit)
         {
             this.ProducedRessource = product;
             this.Interval = interval;
             this.Weight = weight;
             this.Store = 0;
+            this.maxStore = storeLimit;
         }
 
         public void StartProduction()
@@ -30,7 +32,16 @@ namespace Simulation
 
         private void addAmount(object state)
         {
-            this.Store += (int)state;
+            int amountToAdd = (int)state;
+            if ((Store == maxStore) || (Store + amountToAdd > maxStore))
+            {
+                // if adding more than permitted or store is full, fill the store to max instead
+                addAmount(maxStore - Store);
+            }
+            else
+            {
+                Store += amountToAdd;
+            }
         }
     }
 }
