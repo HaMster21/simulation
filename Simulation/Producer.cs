@@ -47,6 +47,7 @@ namespace Simulation
             else
             {
                 Store += amountToAdd;
+                newProducts();
             }
         }
     }
