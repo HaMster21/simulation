@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Simulation
 {
@@ -15,14 +16,16 @@ namespace Simulation
         public int Weight { get; private set; }
         public int Store { get; private set; }
         public int maxStore { get; private set; }
+        public PointF Position { get; private set; }
 
-        Producer(Ressource product, int interval, int weight, int storeLimit)
+        Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
         {
             this.ProducedRessource = product;
             this.Interval = interval;
             this.Weight = weight;
             this.Store = 0;
             this.maxStore = storeLimit;
+            this.Position = position;
         }
 
         public void StartProduction()
