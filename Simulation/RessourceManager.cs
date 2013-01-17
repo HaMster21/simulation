@@ -37,5 +37,14 @@ namespace Simulation
             }
             else return -1;
         }
+
+        public static string getRessourceName(int ID)
+        {
+            if (ressources.ContainsKey(ID))
+            {
+                return ressources[ID];
+            }
+            else return null;
+        }
     }
 }
