@@ -12,7 +12,30 @@ namespace Simulation
 
         public static void addRessource(string name)
         {
-            //ressources.
+            if (ressources.Count == 0)
+            {
+                ressources.Add(1, name);
+            }
+            else
+            {
+                ressources.Add(ressources.Count + 1, name);
+            }
+        }
+
+        public static int getRessourceID(string name)
+        {
+            if (ressources.ContainsValue(name))
+            {
+                foreach (var pair in ressources)
+                {
+                    if (pair.Value == name)
+                    {
+                        return pair.Key;
+                    }
+                }
+                return -1;
+            }
+            else return -1;
         }
     }
 }
