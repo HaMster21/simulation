@@ -67,6 +67,9 @@
     <Compile Include="Ressoruce.cs" />
     <Compile Include="RessourceManager.cs" />
     <Compile Include="Simulation Controller.cs" />
+    <EmbeddedResource Include="Froms\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
