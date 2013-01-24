@@ -51,7 +51,13 @@ namespace Simulation
 
         private void sendCarrier()
         {
-            throw new Exception("The method or operation is not implemented.");
+            foreach (Carrier carrier in this.carriers)
+            {
+                if (carrier.Position == this.Position)
+                {
+                    //carrier.setNewTarget() //TODO: hand over a state object to have a reference to the Producer with new Ressources
+                }
+            }
         }
 
     }

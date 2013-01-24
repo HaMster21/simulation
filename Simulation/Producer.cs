@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Drawing;
 
 namespace Simulation
@@ -51,7 +51,7 @@ namespace Simulation
             else
             {
                 Store += amountToAdd;
-                newProducts();
+                this.newProducts();
             }
         }
 

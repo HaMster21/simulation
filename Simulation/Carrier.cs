@@ -56,7 +56,6 @@ namespace Simulation
             }
         }
 
-
         private void move(object sender, System.Timers.ElapsedEventArgs e)
         {
             float x = this.Position.X;
