@@ -11,6 +11,11 @@ namespace Simulation
         private Dictionary<int, string> ressources;
 
         private static RessourceManager theOnlyInstance;
+        private RessourceManager()
+        {
+            this.ressources = new Dictionary<int, string>();
+            this.ressources.Clear();
+        }
 
         public static RessourceManager Instance() {
             if (theOnlyInstance == null) {

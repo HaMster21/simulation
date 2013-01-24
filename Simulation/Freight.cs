@@ -9,6 +9,12 @@ namespace Simulation
     {
         private Dictionary<int, string> inventory;
 
+        public Freight(FreightPackage package) : this()
+        {
+            this.inventory = new Dictionary<int, string>();
+            this.inventory.Clear();
+        }
+
         public void addToFreight(FreightPackage package)
         {
             //TODO: Rewrite to store items only once
