@@ -12,13 +12,16 @@ namespace Simulation
 
         private Dictionary<Ressource,int> stash;
         private List<Producer> producers;
+        private List<Carrier> carriers;
 
         public Town(PointF position, int producerCount)
         {
             this.producers = new List<Producer>();
             this.stash = new Dictionary<Ressource, int>();
+            this.carriers = new List<Carrier>();
             this.producers.Clear();
             this.stash.Clear();
+            this.carriers.Clear();
 
             this.Position = position;
             Random random = new Random();
@@ -30,6 +33,13 @@ namespace Simulation
                 Producer newProducer = new Producer(ressource, 60000, random.Next(10), random.Next(150), producerPosition);
                 newProducer.newProducts += new System.Action(sendCarrier);
                 this.producers.Add(newProducer);
+            }
+
+            int carrierCount = producerCount / 2;
+            for (int j = 0; j <= carrierCount; j++)
+            {
+                Carrier newCarrier = new Carrier(10, this.Position);
+                this.carriers.Add(newCarrier);
             }
         }
 

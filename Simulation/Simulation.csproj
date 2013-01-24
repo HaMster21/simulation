@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Carrier.cs" />
     <Compile Include="Forms\MapDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
