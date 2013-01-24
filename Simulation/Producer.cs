@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Drawing;
 
 namespace Simulation
@@ -13,15 +13,12 @@ namespace Simulation
 
         public Ressource ProducedRessource { get; private set; }
         public int Interval { get; private set; }
-
-        // will indicate how easily the ressource can be produced in this facility
-        public int Weight { get; private set; }
-
+        public int Weight { get; private set; } // will indicate how easily the ressource can be produced in this facility
         public int Store { get; private set; }
         public int maxStore { get; private set; }
         public PointF Position { get; private set; }
 
-        Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
+        public Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
         {
             this.ProducedRessource = product;
             this.Interval = interval;
@@ -36,6 +33,13 @@ namespace Simulation
             System.Threading.Timer timer = new System.Threading.Timer(new System.Threading.TimerCallback(addAmount), Weight, 0, Interval);
         }
 
+        public FreightPackage getRessources()
+        {
+            this.Store -= 10;
+            FreightPackage transferPackage = new FreightPackage(this.ProducedRessource, 10);
+            return transferPackage;
+        }
+
         private void addAmount(object state)
         {
             int amountToAdd = (int)state;
@@ -47,8 +51,10 @@ namespace Simulation
             else
             {
                 Store += amountToAdd;
-                newProducts();
+                this.newProducts();
             }
         }
+
+
     }
 }

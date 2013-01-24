@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Simulation
 {
-    static class RessourceManager
+    class RessourceManager
     {
-        private static Dictionary<int, string> ressources;
+        private Dictionary<int, string> ressources;
 
-        public static void addRessource(string name)
+        private static RessourceManager theOnlyInstance;
+        private RessourceManager()
+        {
+            this.ressources = new Dictionary<int, string>();
+            this.ressources.Clear();
+        }
+
+        public static RessourceManager Instance() {
+            if (theOnlyInstance == null) {
+                theOnlyInstance = new RessourceManager();
+                return theOnlyInstance;
+            }
+            else {
+                return theOnlyInstance;
+            }
+        }
+
+        public void addRessource(string name)
         {
             if (ressources.Count == 0)
             {
@@ -22,7 +39,7 @@ namespace Simulation
             }
         }
 
-        public static int getRessourceID(string name)
+        public int getRessourceID(string name)
         {
             if (ressources.ContainsValue(name))
             {
@@ -38,13 +55,18 @@ namespace Simulation
             else return -1;
         }
 
-        public static string getRessourceName(int ID)
+        public string getRessourceName(int ID)
         {
             if (ressources.ContainsKey(ID))
             {
                 return ressources[ID];
             }
             else return null;
+        }
+
+        public int ressourceCount()
+        {
+            return ressources.Count;
         }
     }
 }
