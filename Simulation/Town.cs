@@ -31,6 +31,7 @@ namespace Simulation
                 Ressource ressource = new Ressource(ressourceID);
                 PointF producerPosition = new PointF(random.Next(10)+this.Position.X,random.Next(10)+this.Position.Y);
                 Producer newProducer = new Producer(ressource, 60000, random.Next(10), random.Next(150), producerPosition);
+                newProducer.StartProduction();
                 newProducer.newProducts += new System.Action(sendCarrier);
                 this.producers.Add(newProducer);
             }
@@ -38,9 +39,14 @@ namespace Simulation
             int carrierCount = producerCount / 2;
             for (int j = 0; j <= carrierCount; j++)
             {
-                Carrier newCarrier = new Carrier(10, this.Position);
+                Carrier newCarrier = new Carrier(10, this);
                 this.carriers.Add(newCarrier);
             }
+        }
+
+        public void addRessourceToStash(FreightPackage freight)
+        {
+            this.stash.Add(freight.ContainedRessource, freight.Amount);
         }
 
         private void sendCarrier()
