@@ -46,7 +46,7 @@ namespace Simulation
             if ((Store == maxStore) || (Store + amountToAdd > maxStore))
             {
                 // if adding more than permitted or store is full, fill the store to max instead
-                addAmount(maxStore - Store);
+                //addAmount(maxStore - Store);
             }
             else
             {

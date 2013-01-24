@@ -6,16 +6,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Simulation.Forms
 {
     public partial class Map : Form
     {
         private List<Town> towns;
+        private Brush townBrush;
+        private Brush producerBrush;
+        private Pen wayPen;
 
         public Map()
         {
             InitializeComponent();
+            towns = new List<Town>();
+            producerBrush = new SolidBrush(Color.Blue);
+            townBrush = new SolidBrush(Color.Green);
+            wayPen = new Pen(Color.White);
             buildTowns();
             createRessources();
         }
@@ -36,10 +44,10 @@ namespace Simulation.Forms
 
         private void buildTowns()
         {
-            for (int i = 0; i <= 5; i++)
+            Random random = new Random();
+            for (int i = 0; i <= 10; i++)
             {
-                Random random = new Random();
-                PointF position = new PointF(random.Next(5, this.panel1.Width - 5), random.Next(5, this.panel1.Height));
+                PointF position = new PointF(random.Next(5, this.panel1.Width - 15), random.Next(5, this.panel1.Height - 15));
                 Town townToBuild = new Town(position, random.Next(2, 10));
                 towns.Add(townToBuild);
             }
@@ -47,7 +55,7 @@ namespace Simulation.Forms
 
         private void Map_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -55,7 +63,12 @@ namespace Simulation.Forms
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             foreach (Town t in this.towns)
             {
-                e.Graphics.DrawRectangle(null, t.Position.X, t.Position.Y, 1, 1);
+                e.Graphics.FillRectangle(townBrush, t.Position.X, t.Position.Y, 8, 8);
+                foreach (Producer producer in t.producers)
+                {
+                    e.Graphics.FillRectangle(producerBrush, producer.Position.X, producer.Position.Y, 5, 5);
+                    e.Graphics.DrawLine(wayPen, producer.Position, t.Position);
+                }
             }
         }
     }
