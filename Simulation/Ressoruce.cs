@@ -16,5 +16,12 @@ namespace Simulation
             this.ID = ID;
             this.Name = name;
         }
+
+        public Ressource(int ID)
+            : this()
+        {
+            this.ID = ID;
+            this.Name = RessourceManager.Instance().getRessourceName(ID);
+        }
     }
 }

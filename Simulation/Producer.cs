@@ -21,7 +21,7 @@ namespace Simulation
         public int maxStore { get; private set; }
         public PointF Position { get; private set; }
 
-        Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
+        public Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
         {
             this.ProducedRessource = product;
             this.Interval = interval;
