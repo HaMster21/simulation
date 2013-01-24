@@ -10,9 +10,9 @@ namespace Simulation
     {
         public PointF Position { get; private set; }
         public List<Producer> producers;
+        public List<Carrier> carriers;
 
         private Dictionary<Ressource, int> stash;
-        private List<Carrier> carriers;
 
         public Town(PointF position, int producerCount)
         {
@@ -51,9 +51,9 @@ namespace Simulation
             {
                 int ressourceID = random.Next(RessourceManager.Instance().ressourceCount());
                 Ressource ressource = new Ressource(ressourceID);
-                PointF producerPosition = new PointF(random.Next(15, 100) + this.Position.X, random.Next(15, 100) + this.Position.Y);
+                PointF producerPosition = new PointF(random.Next(-100, 100) + this.Position.X, random.Next(-100, 100) + this.Position.Y);
                 Producer newProducer = new Producer(ressource, 60000, random.Next(1, 10), random.Next(50, 150), producerPosition);
-                newProducer.newProducts += new System.Action(sendCarrier);
+                newProducer.newProducts += new ProducerCallback(sendCarrier, newProducer);
                 this.producers.Add(newProducer);
             }
         }
@@ -63,7 +63,7 @@ namespace Simulation
             this.stash.Add(freight.ContainedRessource, freight.Amount);
         }
 
-        private void sendCarrier()
+        private void sendCarrier(Producer producer)
         {
             foreach (Carrier carrier in this.carriers)
             {

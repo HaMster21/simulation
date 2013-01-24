@@ -7,9 +7,10 @@ using System.Drawing;
 
 namespace Simulation
 {
+    public delegate void ProducerCallback(Producer producer);
     class Producer
     {
-        public event System.Action newProducts;
+        public event ProducerCallback newProducts;
 
         public Ressource ProducedRessource { get; private set; }
         public int Interval { get; private set; }

@@ -15,17 +15,18 @@ namespace Simulation.Forms
         private List<Town> towns;
         private Brush townBrush;
         private Brush producerBrush;
+        private Brush carrierBrush;
         private Pen wayPen;
 
         public Map()
         {
             InitializeComponent();
-            towns = new List<Town>();
             producerBrush = new SolidBrush(Color.Blue);
             townBrush = new SolidBrush(Color.Green);
+            carrierBrush = new SolidBrush(Color.Red);
             wayPen = new Pen(Color.White);
-            buildTowns();
-            createRessources();
+            Graphics grafics = this.panel1.CreateGraphics();
+            grafics.FillRectangle(townBrush, new Rectangle(50, 50, 50, 50));
         }
 
         private void createRessources()
@@ -55,12 +56,19 @@ namespace Simulation.Forms
 
         private void Map_Load(object sender, EventArgs e)
         {
-
+            towns = new List<Town>();
+            buildTowns();
+            createRessources();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            paintStaticContent(e);
+        }
+
+        private void paintStaticContent(PaintEventArgs e)
+        {
             foreach (Town t in this.towns)
             {
                 e.Graphics.FillRectangle(townBrush, t.Position.X, t.Position.Y, 8, 8);
@@ -68,6 +76,10 @@ namespace Simulation.Forms
                 {
                     e.Graphics.FillRectangle(producerBrush, producer.Position.X, producer.Position.Y, 5, 5);
                     e.Graphics.DrawLine(wayPen, producer.Position, t.Position);
+                }
+                foreach (Carrier carrier in t.carriers)
+                {
+                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 3, 3);
                 }
             }
         }

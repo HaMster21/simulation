@@ -12,6 +12,7 @@ namespace Simulation
         public int Speed { get; set; }
         public bool Running { get; private set; }
         public PointF CurrentTarget { get; private set; }
+        public bool IsHome { get; private set; }
         
         private Producer targetProducer { get; set; }
         private Town homeTown { get; set; }
@@ -30,6 +31,7 @@ namespace Simulation
             this.Position = initialLocation.Position;
             CurrentTarget = this.Position;
             this.Running = false;
+            this.IsHome = true;
             timer = new System.Timers.Timer(600); // 1/100 second
             timer.Elapsed += new System.Timers.ElapsedEventHandler(move);
         }
@@ -41,6 +43,7 @@ namespace Simulation
                 this.CurrentTarget = target.Position;
                 this.targetProducer = target;
                 this.Running = true;
+                this.IsHome = false;
                 timer.Start();
             }
         }
@@ -52,6 +55,7 @@ namespace Simulation
                 this.CurrentTarget = target.Position;
                 this.targetProducer = null;
                 this.Running = true;
+                this.IsHome = false;
                 timer.Start();
             }
         }
@@ -73,6 +77,7 @@ namespace Simulation
                 else if (this.Position == this.homeTown.Position)
                 {
                     this.stashRessources();
+                    this.IsHome = true;
                 }
             }
         }
