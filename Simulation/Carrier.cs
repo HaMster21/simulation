@@ -63,15 +63,15 @@ namespace Simulation
 
         private void move(object sender, System.Timers.ElapsedEventArgs e)
         {
-            float x = this.Position.X;
-            float y = this.Position.Y;
-            this.Position = new PointF(x + Speed / 10, y + Speed / 10);
+            //get direction vector
+            PointF directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
+            this.Position = new PointF(this.Position.X + (directionVector.X / Speed), this.Position.Y + (directionVector.Y / Speed));
             if (this.Position == this.CurrentTarget)
             {
                 timer.Stop();
                 this.Running = false;
                 this.CurrentTarget = this.Position;
-                if (this.Position == this.targetProducer.Position)
+                if ((int)this.Position.X == (int)this.targetProducer.Position.X && (int)this.Position.Y == (int)targetProducer.Position.Y)
                 {
                     this.getRessourcesAndReturnHome();
                 }
@@ -94,8 +94,8 @@ namespace Simulation
         private void getRessourcesAndReturnHome()
         {
             this.Freight = this.targetProducer.getRessources();
-            this.CurrentTarget = this.homeTown.Position;
             this.targetProducer = null;
+            this.setNewTarget(this.homeTown);
             this.Running = true;
             this.timer.Start();
         }

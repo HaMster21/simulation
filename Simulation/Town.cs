@@ -39,7 +39,8 @@ namespace Simulation
             int carrierCount = producerCount / 2;
             for (int j = 0; j <= carrierCount; j++)
             {
-                Carrier newCarrier = new Carrier(10, this);
+                Random random = new Random();
+                Carrier newCarrier = new Carrier(random.Next(2,10), this);
                 this.carriers.Add(newCarrier);
             }
         }
