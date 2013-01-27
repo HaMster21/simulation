@@ -51,9 +51,9 @@ namespace Simulation
             {
                 int ressourceID = random.Next(RessourceManager.Instance().ressourceCount());
                 Ressource ressource = new Ressource(ressourceID);
-                PointF producerPosition = new PointF(random.Next(-100, 100) + this.Position.X, random.Next(-100, 100) + this.Position.Y);
-                Producer newProducer = new Producer(ressource, 60000, random.Next(1, 10), random.Next(50, 150), producerPosition);
-                newProducer.newProducts += new ProducerCallback(sendCarrier, newProducer);
+                PointF producerPosition = new PointF(random.Next(-50, 50) + this.Position.X, random.Next(-50, 50) + this.Position.Y);
+                Producer newProducer = new Producer(ressource, random.Next(6000,30000), random.Next(1, 10), random.Next(50, 150), producerPosition);
+                newProducer.newProducts += new ProducerCallback(sendCarrier);
                 this.producers.Add(newProducer);
             }
         }
@@ -67,9 +67,10 @@ namespace Simulation
         {
             foreach (Carrier carrier in this.carriers)
             {
-                if (carrier.Position == this.Position)
+                if (carrier.IsHome)
                 {
-                    //carrier.setNewTarget() //TODO: hand over a state object to have a reference to the Producer with new Ressources
+                    carrier.setNewTarget(producer);
+                    break;
                 }
             }
         }

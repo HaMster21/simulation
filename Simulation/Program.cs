@@ -15,7 +15,7 @@ namespace Simulation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Forms.Map());
+            Application.Run(new Forms.Controller());
         }
     }
 }

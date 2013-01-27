@@ -13,20 +13,24 @@ namespace Simulation.Forms
     public partial class Map : Form
     {
         private List<Town> towns;
+        
         private Brush townBrush;
         private Brush producerBrush;
         private Brush carrierBrush;
         private Pen wayPen;
 
-        public Map()
+        private int numberOfTowns;
+        private int averageProducerCount;
+
+        public Map(int townCount, int averageProducerToBuiltCount)
         {
             InitializeComponent();
             producerBrush = new SolidBrush(Color.Blue);
             townBrush = new SolidBrush(Color.Green);
             carrierBrush = new SolidBrush(Color.Red);
             wayPen = new Pen(Color.White);
-            Graphics grafics = this.panel1.CreateGraphics();
-            grafics.FillRectangle(townBrush, new Rectangle(50, 50, 50, 50));
+            this.numberOfTowns = townCount;
+            this.averageProducerCount = averageProducerToBuiltCount;
         }
 
         private void createRessources()
@@ -46,10 +50,10 @@ namespace Simulation.Forms
         private void buildTowns()
         {
             Random random = new Random();
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= numberOfTowns-1; i++)
             {
                 PointF position = new PointF(random.Next(5, this.panel1.Width - 15), random.Next(5, this.panel1.Height - 15));
-                Town townToBuild = new Town(position, random.Next(2, 10));
+                Town townToBuild = new Town(position, random.Next(averageProducerCount - averageProducerCount/3, averageProducerCount + averageProducerCount/3));
                 towns.Add(townToBuild);
             }
         }
@@ -59,15 +63,16 @@ namespace Simulation.Forms
             towns = new List<Town>();
             buildTowns();
             createRessources();
+            this.animationTimer.Start();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            paintStaticContent(e);
+            paintContent(e);
         }
 
-        private void paintStaticContent(PaintEventArgs e)
+        private void paintContent(PaintEventArgs e)
         {
             foreach (Town t in this.towns)
             {
@@ -79,9 +84,14 @@ namespace Simulation.Forms
                 }
                 foreach (Carrier carrier in t.carriers)
                 {
-                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 3, 3);
+                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 10, 10);
                 }
             }
+        }
+
+        private void redrawPanel(object sender, EventArgs e)
+        {
+            this.panel1.Refresh();
         }
     }
 }

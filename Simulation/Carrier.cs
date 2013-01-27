@@ -32,7 +32,8 @@ namespace Simulation
             CurrentTarget = this.Position;
             this.Running = false;
             this.IsHome = true;
-            timer = new System.Timers.Timer(600); // 1/100 second
+            timer = new System.Timers.Timer(100); // every 1/10th of a second
+            timer.AutoReset = true;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(move);
         }
 
@@ -64,7 +65,7 @@ namespace Simulation
         {
             float x = this.Position.X;
             float y = this.Position.Y;
-            this.Position = new PointF(x + Speed / 100, y + Speed / 100);
+            this.Position = new PointF(x + Speed / 10, y + Speed / 10);
             if (this.Position == this.CurrentTarget)
             {
                 timer.Stop();

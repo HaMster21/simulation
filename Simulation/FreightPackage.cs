@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Simulation
 {
-    struct FreightPackage
+    public struct FreightPackage
     {
         public Ressource ContainedRessource { get; private set; }
         public int Amount { get; private set; }

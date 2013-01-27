@@ -8,7 +8,7 @@ using System.Drawing;
 namespace Simulation
 {
     public delegate void ProducerCallback(Producer producer);
-    class Producer
+    public class Producer
     {
         public event ProducerCallback newProducts;
 
@@ -52,7 +52,7 @@ namespace Simulation
             else
             {
                 Store += amountToAdd;
-                this.newProducts();
+                this.newProducts(this);
             }
         }
 
