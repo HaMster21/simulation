@@ -68,9 +68,11 @@ namespace Simulation
         private void move(object sender, System.Timers.ElapsedEventArgs e)
         {
 
-            this.Position = new PointF(this.Position.X + (directionVector.X / (Speed * 10)), this.Position.Y + (directionVector.Y / (Speed * 10)));
+            moveAlongDirectionVector();
+
             if ((int)this.Position.X == (int)this.CurrentTarget.X && (int)this.Position.Y == (int)this.CurrentTarget.Y)
             {
+                //we reached the target
                 timer.Stop();
                 this.Running = false;
 
@@ -78,12 +80,17 @@ namespace Simulation
                 {
                     this.getRessourcesAndReturnHome();
                 }
-                else if ((int)this.Position.X == (int)this.homeTown.Position.X && (int)this.Position.X == (int)this.homeTown.Position.Y)
+                else
                 {
                     this.stashRessources();
                     this.IsHome = true;
                 }
             }
+        }
+
+        private void moveAlongDirectionVector()
+        {
+            this.Position = new PointF(this.Position.X + (directionVector.X / (Speed * 10)), this.Position.Y + (directionVector.Y / (Speed * 10)));
         }
 
         private void stashRessources()
