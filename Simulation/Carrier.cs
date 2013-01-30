@@ -13,10 +13,12 @@ namespace Simulation
         public bool Running { get; private set; }
         public PointF CurrentTarget { get; private set; }
         public bool IsHome { get; private set; }
-        
+
         private Producer targetProducer { get; set; }
         private Town homeTown { get; set; }
         private FreightPackage Freight { get; set; }
+
+        PointF directionVector;
 
         private System.Timers.Timer timer;
 
@@ -29,11 +31,11 @@ namespace Simulation
         {
             this.Speed = speed;
             this.Position = initialLocation.Position;
+            this.homeTown = initialLocation;
             CurrentTarget = this.Position;
             this.Running = false;
             this.IsHome = true;
             timer = new System.Timers.Timer(100); // every 1/10th of a second
-            timer.AutoReset = true;
             timer.Elapsed += new System.Timers.ElapsedEventHandler(move);
         }
 
@@ -45,6 +47,7 @@ namespace Simulation
                 this.targetProducer = target;
                 this.Running = true;
                 this.IsHome = false;
+                directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
                 timer.Start();
             }
         }
@@ -57,25 +60,25 @@ namespace Simulation
                 this.targetProducer = null;
                 this.Running = true;
                 this.IsHome = false;
+                directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
                 timer.Start();
             }
         }
 
         private void move(object sender, System.Timers.ElapsedEventArgs e)
         {
-            //get direction vector
-            PointF directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
-            this.Position = new PointF(this.Position.X + (directionVector.X / Speed), this.Position.Y + (directionVector.Y / Speed));
-            if (this.Position == this.CurrentTarget)
+
+            this.Position = new PointF(this.Position.X + (directionVector.X / (Speed * 10)), this.Position.Y + (directionVector.Y / (Speed * 10)));
+            if ((int)this.Position.X == (int)this.CurrentTarget.X && (int)this.Position.Y == (int)this.CurrentTarget.Y)
             {
                 timer.Stop();
                 this.Running = false;
-                this.CurrentTarget = this.Position;
-                if ((int)this.Position.X == (int)this.targetProducer.Position.X && (int)this.Position.Y == (int)targetProducer.Position.Y)
+
+                if (!(this.targetProducer == null) && (int)this.Position.X == (int)this.targetProducer.Position.X && (int)this.Position.Y == (int)targetProducer.Position.Y)
                 {
                     this.getRessourcesAndReturnHome();
                 }
-                else if (this.Position == this.homeTown.Position)
+                else if ((int)this.Position.X == (int)this.homeTown.Position.X && (int)this.Position.X == (int)this.homeTown.Position.Y)
                 {
                     this.stashRessources();
                     this.IsHome = true;

@@ -29,19 +29,19 @@ namespace Simulation
 
         public void addRessource(string name)
         {
-            if (ressources.Count == 0)
+            if (this.ressources.Count == 0)
             {
-                ressources.Add(1, name);
+                this.ressources.Add(1, name);
             }
             else
             {
-                ressources.Add(ressources.Count + 1, name);
+                this.ressources.Add(ressources.Count + 1, name);
             }
         }
 
         public int getRessourceID(string name)
         {
-            if (ressources.ContainsValue(name))
+            if (this.ressources.ContainsValue(name))
             {
                 foreach (var pair in ressources)
                 {
@@ -57,16 +57,16 @@ namespace Simulation
 
         public string getRessourceName(int ID)
         {
-            if (ressources.ContainsKey(ID))
+            if (this.ressources.ContainsKey(ID))
             {
-                return ressources[ID];
+                return this.ressources[ID];
             }
-            else return null;
+            else return "";
         }
 
         public int ressourceCount()
         {
-            return ressources.Count;
+            return this.ressources.Count;
         }
     }
 }

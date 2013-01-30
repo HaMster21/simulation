@@ -60,9 +60,9 @@ namespace Simulation.Forms
 
         private void Map_Load(object sender, EventArgs e)
         {
+            createRessources();
             towns = new List<Town>();
             buildTowns();
-            createRessources();
             this.animationTimer.Start();
         }
 
