@@ -8,6 +8,7 @@ using System.Drawing;
 namespace Simulation
 {
     public delegate void ProducerCallback(Producer producer);
+
     public class Producer
     {
         public event ProducerCallback newProducts;
@@ -18,6 +19,8 @@ namespace Simulation
         public int Store { get; private set; }
         public int maxStore { get; private set; }
         public PointF Position { get; private set; }
+
+        private Brush producerBrush = new SolidBrush( Color.Black );
 
         public Producer(Ressource product, int interval, int weight, int storeLimit, PointF position)
         {
@@ -56,6 +59,9 @@ namespace Simulation
             }
         }
 
-
+        internal void Repaint( System.Windows.Forms.PaintEventArgs a )
+        {
+            a.Graphics.FillRectangle( producerBrush, this.Position.X, this.Position.Y, 5, 5 );
+        }
     }
 }

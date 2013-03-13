@@ -20,6 +20,8 @@ namespace Simulation
 
         PointF directionVector;
 
+        private Pen carrierPen = new Pen( Color.Blue );
+
         private System.Timers.Timer timer;
 
         /// <summary>
@@ -108,6 +110,11 @@ namespace Simulation
             this.setNewTarget(this.homeTown);
             this.Running = true;
             this.timer.Start();
+        }
+
+        internal void Repaint( System.Windows.Forms.PaintEventArgs a )
+        {
+            a.Graphics.DrawEllipse( carrierPen, this.Position.X, this.Position.Y, 4f, 3f );
         }
     }
 }
