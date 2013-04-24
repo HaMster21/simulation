@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 
 namespace Simulation
@@ -16,14 +14,14 @@ namespace Simulation
         public List<Producer> producers;
         public List<Carrier> carriers;
 
-        private Dictionary<int, int> stash;
+        private List<Ressource, int> stash;
         private Brush townbrush = new SolidBrush( Color.Green );
         private Pen wayPen = new Pen( Color.White );
 
         public Town( PointF position, int producerCount )
         {
             this.producers = new List<Producer>();
-            this.stash = new Dictionary<int, int>();
+            this.stash = new List<Ressource>();
             this.carriers = new List<Carrier>();
             this.producers.Clear();
             this.stash.Clear();

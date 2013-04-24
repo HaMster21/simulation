@@ -33,32 +33,33 @@ namespace Simulation.Forms
             this.averageProducerCount = averageProducerToBuiltCount;
         }
 
+        #region Event reactions
         private void createRessources()
         {
-            RessourceManager.Instance().addRessource("Holz");
-            RessourceManager.Instance().addRessource("Stein");
-            RessourceManager.Instance().addRessource("Getreide");
-            RessourceManager.Instance().addRessource("Fisch");
-            RessourceManager.Instance().addRessource("Bretter");
-            RessourceManager.Instance().addRessource("Wolle");
-            RessourceManager.Instance().addRessource("Diamant");
-            RessourceManager.Instance().addRessource("Humus");
-            RessourceManager.Instance().addRessource("Bonbons");
-            RessourceManager.Instance().addRessource("Waffen");
+            RessourceManager.Instance().addRessource( "Holz" );
+            RessourceManager.Instance().addRessource( "Stein" );
+            RessourceManager.Instance().addRessource( "Getreide" );
+            RessourceManager.Instance().addRessource( "Fisch" );
+            RessourceManager.Instance().addRessource( "Bretter" );
+            RessourceManager.Instance().addRessource( "Wolle" );
+            RessourceManager.Instance().addRessource( "Diamant" );
+            RessourceManager.Instance().addRessource( "Humus" );
+            RessourceManager.Instance().addRessource( "Bonbons" );
+            RessourceManager.Instance().addRessource( "Waffen" );
         }
 
         private void buildTowns()
         {
             Random random = new Random();
-            for (int i = 0; i <= numberOfTowns-1; i++)
+            for ( int i = 0; i <= numberOfTowns - 1; i++ )
             {
-                PointF position = new PointF(random.Next(5, this.panel1.Width - 15), random.Next(5, this.panel1.Height - 15));
-                Town townToBuild = new Town(position, random.Next(averageProducerCount - averageProducerCount/3, averageProducerCount + averageProducerCount/3));
-                towns.Add(townToBuild);
+                PointF position = new PointF( random.Next( 5, this.panel1.Width - 15 ), random.Next( 5, this.panel1.Height - 15 ) );
+                Town townToBuild = new Town( position, random.Next( averageProducerCount - averageProducerCount / 3, averageProducerCount + averageProducerCount / 3 ) );
+                towns.Add( townToBuild );
             }
         }
 
-        private void Map_Load(object sender, EventArgs e)
+        private void Map_Load( object sender, EventArgs e )
         {
             createRessources();
             towns = new List<Town>();
@@ -66,11 +67,12 @@ namespace Simulation.Forms
             this.animationTimer.Start();
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void panel1_Paint( object sender, PaintEventArgs e )
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            paintContent(e);
+            paintContent( e );
         }
+        #endregion
 
         private void paintContent(PaintEventArgs e)
         {
@@ -84,7 +86,7 @@ namespace Simulation.Forms
                 }
                 foreach (Carrier carrier in t.carriers)
                 {
-                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 10, 10);
+                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 12, 10);
                 }
             }
         }

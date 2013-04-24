@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Simulation
 {
@@ -72,7 +68,10 @@ namespace Simulation
 
             moveAlongDirectionVector();
 
-            if ((int)this.Position.X == (int)this.CurrentTarget.X && (int)this.Position.Y == (int)this.CurrentTarget.Y)
+            if (
+                ( (int)this.Position.X <= (int)this.CurrentTarget.X + 1 || (int)this.Position.X >= (int)this.CurrentTarget.X -1) && 
+                ( (int)this.Position.Y <= (int)this.CurrentTarget.Y + 1 || (int)this.Position.Y >= (int)this.CurrentTarget.Y -1)
+               )
             {
                 //we reached the target
                 timer.Stop();
