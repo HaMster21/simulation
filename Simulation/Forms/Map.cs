@@ -70,26 +70,12 @@ namespace Simulation.Forms
         private void panel1_Paint( object sender, PaintEventArgs e )
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            paintContent( e );
-        }
-        #endregion
-
-        private void paintContent(PaintEventArgs e)
-        {
-            foreach (Town t in this.towns)
+            foreach ( Town t in this.towns )
             {
-                e.Graphics.FillRectangle(townBrush, t.Position.X, t.Position.Y, 8, 8);
-                foreach (Producer producer in t.producers)
-                {
-                    e.Graphics.FillRectangle(producerBrush, producer.Position.X, producer.Position.Y, 5, 5);
-                    e.Graphics.DrawLine(wayPen, producer.Position, t.Position);
-                }
-                foreach (Carrier carrier in t.carriers)
-                {
-                    e.Graphics.FillEllipse(carrierBrush, carrier.Position.X, carrier.Position.Y, 12, 10);
-                }
+                t.Repaint( e );
             }
         }
+        #endregion
 
         private void redrawPanel(object sender, EventArgs e)
         {

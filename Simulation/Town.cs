@@ -14,7 +14,7 @@ namespace Simulation
         public List<Producer> producers;
         public List<Carrier> carriers;
 
-        private List<Ressource, int> stash;
+        private List<Ressource> stash;
         private Brush townbrush = new SolidBrush( Color.Green );
         private Pen wayPen = new Pen( Color.White );
 
@@ -60,7 +60,7 @@ namespace Simulation
                 PointF producerPosition = new PointF( random.Next( -50, 50 ) + this.Position.X, random.Next( -50, 50 ) + this.Position.Y );
                 
                 Producer newProducer = new Producer( ressource, random.Next( 10000, 30000 ), random.Next( 1, 10 ), random.Next( 50, 150 ), producerPosition );
-                newProducer.newProducts += new ProducerCallback( sendCarrier );
+                newProducer.newProducts += this.sendCarrier;
                 this.repaint += newProducer.Repaint;
 
                 this.producers.Add( newProducer );
@@ -69,7 +69,7 @@ namespace Simulation
 
         public void addRessourceToStash( FreightPackage freight )
         {
-            this.stash.Add( freight.ContainedRessource.ID, freight.Amount );
+            this.stash.Add( freight.ContainedRessource );
         }
 
         private void sendCarrier( Producer producer )
@@ -84,9 +84,13 @@ namespace Simulation
             }
         }
 
-        internal void Repaint( System.Windows.Forms.PaintEventArgs a )
+        public void Repaint( System.Windows.Forms.PaintEventArgs a )
         {
             a.Graphics.FillRectangle( townbrush, this.Position.X, this.Position.Y, 8f, 8f );
+            foreach ( Producer p in this.producers )
+            {
+                a.Graphics.DrawLine( new Pen( Color.White ), this.Position, p.Position );
+            }
             this.repaint( a );
         }
     }

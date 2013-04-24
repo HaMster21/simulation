@@ -25,7 +25,7 @@ namespace Simulation
         /// </summary>
         /// <param name="speed">The speed of the Carrier, must be between 1 and 100</param>
         /// <param name="position">The start position of the Carrier</param>
-        public Carrier(int speed, Town initialLocation)
+        public Carrier( int speed, Town initialLocation )
         {
             this.Speed = speed;
             this.Position = initialLocation.Position;
@@ -33,51 +33,48 @@ namespace Simulation
             CurrentTarget = this.Position;
             this.Running = false;
             this.IsHome = true;
-            timer = new System.Timers.Timer(100); // every 1/10th of a second
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(move);
+            timer = new System.Timers.Timer( 100 ); // every 1/10th of a second
+            timer.Elapsed += new System.Timers.ElapsedEventHandler( move );
         }
 
-        public void setNewTarget(Producer target)
+        public void setNewTarget( Producer target )
         {
-            if (target.Position != this.Position)
-            {
-                this.CurrentTarget = target.Position;
-                this.targetProducer = target;
-                this.Running = true;
-                this.IsHome = false;
-                directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
-                timer.Start();
-            }
+            this.CurrentTarget = target.Position;
+            this.targetProducer = target;
+            this.Running = true;
+            this.IsHome = false;
+            directionVector = new PointF( this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y );
+            timer.Start();
         }
 
-        public void setNewTarget(Town target)
+        public void setNewTarget( Town target )
         {
-            if (target.Position != this.Position)
-            {
-                this.CurrentTarget = target.Position;
-                this.targetProducer = null;
-                this.Running = true;
-                this.IsHome = false;
-                directionVector = new PointF(this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y);
-                timer.Start();
-            }
+            this.CurrentTarget = target.Position;
+            this.targetProducer = null;
+            this.Running = true;
+            this.IsHome = false;
+            directionVector = new PointF( this.CurrentTarget.X - this.Position.X, this.CurrentTarget.Y - this.Position.Y );
+            timer.Start();
         }
 
-        private void move(object sender, System.Timers.ElapsedEventArgs e)
+        private void move( object sender, System.Timers.ElapsedEventArgs e )
         {
 
             moveAlongDirectionVector();
 
             if (
-                ( (int)this.Position.X <= (int)this.CurrentTarget.X + 1 || (int)this.Position.X >= (int)this.CurrentTarget.X -1) && 
-                ( (int)this.Position.Y <= (int)this.CurrentTarget.Y + 1 || (int)this.Position.Y >= (int)this.CurrentTarget.Y -1)
+                ((int)this.Position.X <= (int)this.CurrentTarget.X + 1 && (int)this.Position.X >= (int)this.CurrentTarget.X - 1) &&
+                ((int)this.Position.Y <= (int)this.CurrentTarget.Y + 1 && (int)this.Position.Y >= (int)this.CurrentTarget.Y - 1)
                )
             {
                 //we reached the target
                 timer.Stop();
                 this.Running = false;
 
-                if (!(this.targetProducer == null) && (int)this.Position.X == (int)this.targetProducer.Position.X && (int)this.Position.Y == (int)targetProducer.Position.Y)
+                if ( !(this.targetProducer == null) &&
+                    ((int)this.Position.X <= (int)this.targetProducer.Position.X + 1 && (int)this.Position.X >= (int)this.targetProducer.Position.X - 1) &&
+                    ((int)this.Position.Y <= (int)this.targetProducer.Position.Y + 1 && (int)this.Position.Y >= (int)this.targetProducer.Position.Y - 1)
+                   )
                 {
                     this.getRessourcesAndReturnHome();
                 }
@@ -91,12 +88,12 @@ namespace Simulation
 
         private void moveAlongDirectionVector()
         {
-            this.Position = new PointF(this.Position.X + (directionVector.X / (Speed * 10)), this.Position.Y + (directionVector.Y / (Speed * 10)));
+            this.Position = new PointF( this.Position.X + (directionVector.X / (Speed * 10)), this.Position.Y + (directionVector.Y / (Speed * 10)) );
         }
 
         private void stashRessources()
         {
-            this.homeTown.addRessourceToStash(this.Freight);
+            this.homeTown.addRessourceToStash( this.Freight );
             this.CurrentTarget = this.Position;
             this.targetProducer = null;
             this.Running = false;
@@ -106,7 +103,7 @@ namespace Simulation
         {
             this.Freight = this.targetProducer.getRessources();
             this.targetProducer = null;
-            this.setNewTarget(this.homeTown);
+            this.setNewTarget( this.homeTown );
             this.Running = true;
             this.timer.Start();
         }
